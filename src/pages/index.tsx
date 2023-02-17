@@ -2,11 +2,11 @@ import { ParagraphElement } from '@/component/DefaultElement';
 import { HeadingElement } from '@/component/HeadingElement';
 import { Leaf } from '@/component/LeafElement';
 import { transformBold, transformHeading } from '@/lib/transformer';
+import { Box, VStack } from '@chakra-ui/react';
 import * as React from 'react';
 import type { Descendant } from 'slate';
 import { createEditor } from 'slate';
 import { Editable, RenderElementProps, Slate, withReact } from 'slate-react';
-
 
 const initialValue: Descendant[] = [
   {
@@ -35,8 +35,8 @@ export default function RichTextEditor() {
   }, []);
 
   return (
-    <div>
-      <div>
+    <Box padding={16} minH={'100vh'} minW={'100vw'} backgroundColor="gray.100">
+      <Box  h='100%'>
         <Slate
           editor={editor}
           value={inputValue}
@@ -45,6 +45,17 @@ export default function RichTextEditor() {
           }}
         >
           <Editable
+            style={{
+              marginTop: 20,
+              minHeight: 460,
+              width: '100%',
+              borderRadius: 8,
+              backgroundColor: 'white',
+              paddingLeft: 14,
+              paddingRight: 14,
+              paddingTop: 8,
+              paddingBottom: 8,
+            }}
             renderLeaf={(props) => <Leaf {...props} />}
             renderElement={renderElement}
             placeholder="Type anything here..."
@@ -61,7 +72,7 @@ export default function RichTextEditor() {
             }}
           />
         </Slate>
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
