@@ -1,4 +1,5 @@
 import { ParagraphElement } from '@/component/DefaultElement';
+import { Docs } from '@/component/Docs';
 import { GridElement } from '@/component/GridElement';
 import { HeadingElement } from '@/component/HeadingElement';
 import { Leaf } from '@/component/LeafElement';
@@ -13,11 +14,7 @@ import { Box } from '@chakra-ui/react';
 import * as React from 'react';
 import { createEditor, Descendant, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
-import {
-  Editable, RenderElementProps,
-  Slate,
-  withReact
-} from 'slate-react';
+import { Editable, RenderElementProps, Slate, withReact } from 'slate-react';
 
 const initialValue: Descendant[] = [
   {
@@ -52,6 +49,7 @@ export default function RichTextEditor() {
   return (
     <Box padding={16} minH={'100vh'} minW={'100vw'} backgroundColor="gray.100">
       <Box>
+        <Docs/>
         <Slate
           editor={editor}
           value={inputValue}
