@@ -8,7 +8,7 @@ import { isBlockColumn } from '@/lib/editor-helper';
 import {
   transformBold,
   transformColumn,
-  transformHeading
+  transformHeading,
 } from '@/lib/transformer';
 import { Box } from '@chakra-ui/react';
 import * as React from 'react';
@@ -49,7 +49,7 @@ export default function RichTextEditor() {
   return (
     <Box padding={16} minH={'100vh'} minW={'100vw'} backgroundColor="gray.100">
       <Box>
-        <Docs/>
+        <Docs />
         <Slate
           editor={editor}
           value={inputValue}
@@ -86,9 +86,15 @@ export default function RichTextEditor() {
                   transformColumn(editor);
                 }
               }
-              if (event.key === 'Enter' && event.shiftKey) {
-                event.preventDefault();
-                if (isBlockColumn(editor)) {
+              if (isBlockColumn(editor)) {
+                if (event.key === 'Enter' && !event.shiftKey) {
+                  event.preventDefault();
+                  // handle new line inside column
+                  Transforms.insertText(editor, '\n');
+                }
+
+                if (event.key === 'Enter' && event.shiftKey) {
+                  event.preventDefault();
                   // handle new line while in grid
                   Transforms.insertNodes(
                     editor,
