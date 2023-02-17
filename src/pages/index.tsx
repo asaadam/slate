@@ -1,13 +1,26 @@
 import { ParagraphElement } from '@/component/DefaultElement';
+import { GridElement } from '@/component/GridElement';
 import { HeadingElement } from '@/component/HeadingElement';
 import { Leaf } from '@/component/LeafElement';
 import { Toolbar } from '@/component/Toolbar';
-import { transformBold, transformHeading } from '@/lib/transformer';
+import { isBlockColumn } from '@/lib/editor-helper';
+import {
+  transformBold,
+  transformColumn,
+  transformHeading,
+} from '@/lib/transformer';
 import { Box, VStack } from '@chakra-ui/react';
 import * as React from 'react';
-import type { Descendant } from 'slate';
-import { createEditor } from 'slate';
-import { Editable, RenderElementProps, Slate, withReact } from 'slate-react';
+import { Descendant, Editor, Path } from 'slate';
+import { createEditor, Transforms } from 'slate';
+import { withHistory } from 'slate-history';
+import {
+  Editable,
+  ReactEditor,
+  RenderElementProps,
+  Slate,
+  withReact,
+} from 'slate-react';
 
 const initialValue: Descendant[] = [
   {
@@ -19,7 +32,7 @@ const initialValue: Descendant[] = [
 export default function RichTextEditor() {
   const [inputValue, setInputValue] =
     React.useState<Descendant[]>(initialValue);
-  const [editor] = React.useState(() => withReact(createEditor()));
+  const [editor] = React.useState(() => withReact(withHistory(createEditor())));
 
   const renderElement = React.useCallback((props: RenderElementProps) => {
     switch (props.element.type) {
@@ -29,6 +42,10 @@ export default function RichTextEditor() {
       case 'paragraph': {
         return <ParagraphElement {...props} />;
       }
+      case 'grid': {
+        return <GridElement {...props} />;
+      }
+
       default: {
         return <ParagraphElement {...props} />;
       }
@@ -37,7 +54,7 @@ export default function RichTextEditor() {
 
   return (
     <Box padding={16} minH={'100vh'} minW={'100vw'} backgroundColor="gray.100">
-      <Box  >
+      <Box>
         <Slate
           editor={editor}
           value={inputValue}
@@ -45,7 +62,7 @@ export default function RichTextEditor() {
             setInputValue(value);
           }}
         >
-                <Toolbar/>
+          <Toolbar />
           <Editable
             style={{
               marginTop: 20,
@@ -69,6 +86,24 @@ export default function RichTextEditor() {
                 }
                 if (event.key === 'b') {
                   transformBold(editor);
+                }
+                if (event.key === 'c') {
+                  transformColumn(editor);
+                }
+              }
+              if (event.key === 'Enter' && event.shiftKey) {
+                event.preventDefault();
+                if (isBlockColumn(editor)) {
+                  // handle new line while in grid
+                  Transforms.insertNodes(
+                    editor,
+                    {
+                      type: 'paragraph',
+                      children: [{ text: '' }],
+                    },
+                    { at: [editor.children.length] }
+                  );
+                  Transforms.select(editor, [editor.children.length - 1, 0]);
                 }
               }
             }}

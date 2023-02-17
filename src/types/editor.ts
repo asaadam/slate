@@ -13,7 +13,13 @@ export type HeadingElement = {
   children: CustomText[]
 }
 
-export type CustomElement = ParagraphElement | HeadingElement
+export type GridElement = {
+  type: 'grid'
+  children: CustomElement
+}
+
+
+export type CustomElement = ParagraphElement | HeadingElement | GridElement
 
 export type FormattedText = { text: string; bold?: true }
 

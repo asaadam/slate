@@ -16,3 +16,10 @@ export const isBlockHeadingActive = (editor:CustomEditor)=>{
   return match ? true : false;
 }
 
+export const isBlockColumn = (editor:CustomEditor)=>{
+  const [match] = Editor.nodes(editor, {
+    match: (n:any) => n.type === 'grid',
+  });
+  return match ? true : false;
+}
+
