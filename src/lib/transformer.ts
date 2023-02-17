@@ -1,9 +1,9 @@
 import { CustomEditor } from '@/types/editor';
 import { Transforms, Editor, Text } from 'slate';
-import { isBoldMarkActive, isHeadingActive } from './editor-helper';
+import { isBlockHeadingActive, isBoldMarkActive } from './editor-helper';
 
 export function transformHeading(editor: CustomEditor) {
-  const active = isHeadingActive(editor);
+  const active = isBlockHeadingActive(editor);
   Transforms.setNodes(
     editor,
     { type: active ? 'paragraph' : 'heading' },

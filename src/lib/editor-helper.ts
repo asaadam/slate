@@ -9,7 +9,7 @@ export const isBoldMarkActive = (editor:CustomEditor)=>{
   return match ? true : false;
 }
 
-export const isHeadingActive = (editor:CustomEditor)=>{
+export const isBlockHeadingActive = (editor:CustomEditor)=>{
   const [match] = Editor.nodes(editor, {
     match: (n: any) => n.type === 'heading',
   });

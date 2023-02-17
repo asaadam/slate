@@ -1,6 +1,7 @@
 import { ParagraphElement } from '@/component/DefaultElement';
 import { HeadingElement } from '@/component/HeadingElement';
 import { Leaf } from '@/component/LeafElement';
+import { Toolbar } from '@/component/Toolbar';
 import { transformBold, transformHeading } from '@/lib/transformer';
 import { Box, VStack } from '@chakra-ui/react';
 import * as React from 'react';
@@ -36,7 +37,7 @@ export default function RichTextEditor() {
 
   return (
     <Box padding={16} minH={'100vh'} minW={'100vw'} backgroundColor="gray.100">
-      <Box  h='100%'>
+      <Box  >
         <Slate
           editor={editor}
           value={inputValue}
@@ -44,6 +45,7 @@ export default function RichTextEditor() {
             setInputValue(value);
           }}
         >
+                <Toolbar/>
           <Editable
             style={{
               marginTop: 20,
