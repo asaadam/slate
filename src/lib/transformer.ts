@@ -34,6 +34,7 @@ export function transformColumn(editor: CustomEditor) {
   Transforms.insertNodes(editor, [
     {
       type: 'grid',
+      //@ts-ignore
       children: [
         { type: 'paragraph', children: [{ text: 'A' }] },
         { type: 'paragraph', children: [{ text: 'B' }] },

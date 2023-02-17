@@ -7,19 +7,16 @@ import { isBlockColumn } from '@/lib/editor-helper';
 import {
   transformBold,
   transformColumn,
-  transformHeading,
+  transformHeading
 } from '@/lib/transformer';
-import { Box, VStack } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 import * as React from 'react';
-import { Descendant, Editor, Path } from 'slate';
-import { createEditor, Transforms } from 'slate';
+import { createEditor, Descendant, Transforms } from 'slate';
 import { withHistory } from 'slate-history';
 import {
-  Editable,
-  ReactEditor,
-  RenderElementProps,
+  Editable, RenderElementProps,
   Slate,
-  withReact,
+  withReact
 } from 'slate-react';
 
 const initialValue: Descendant[] = [
